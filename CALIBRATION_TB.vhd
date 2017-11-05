@@ -31,42 +31,36 @@ use IEEE.STD_LOGIC_1164.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity DISTANCE_DEDUCE_TB is
+entity CALIBRATION_TB is
 --  Port ( );
-end DISTANCE_DEDUCE_TB;
+end CALIBRATION_TB;
 
-architecture Behavioral of DISTANCE_DEDUCE_TB is
+architecture Behavioral of CALIBRATION_TB is
 
-component DISTANCE_DEDUCER is
+component CALIBRATION is
 	port(   
 	       CLK: in STD_LOGIC;
 	       RESET: in STD_LOGIC;
-	       COMPARE: in STD_LOGIC;
-	       REF:  in INTEGER;
-	       MEAS: in INTEGER;
-	       DISTANCE_RAW: out INTEGER;
-	       DISTANCE_D: out INTEGER;
-	       DISTANCE_X: out INTEGER   );
+	       CALIBRATE: in STD_LOGIC;
+	       DISTANCE_RAW:  in INTEGER;
+	       REF: out INTEGER   );
+
 
 end component;
 
-signal clk, reset, compare: STD_LOGIC;
-signal ref, meas, distance_d, distance_x, distance_raw: INTEGER;
+signal clk, reset, calibrate: STD_LOGIC;
+signal ref, distance_raw: INTEGER;
 
 
 begin
 
-uut: DISTANCE_DEDUCER 
+uut: CALIBRATION 
 	port map(   
 	           CLK => clk,
-	           RESET => reset,
-	           COMPARE => compare, 
-	           REF => ref,
-	           MEAS => meas,
-	           DISTANCE_RAW => distance_raw,
-	           DISTANCE_D => distance_d,
-	           DISTANCE_X => distance_x );
-	           
+               RESET => reset,
+               CALIBRATE => calibrate,
+               DISTANCE_RAW => distance_raw,
+               REF => ref  );
 
 clock_process: process
 begin
@@ -81,29 +75,23 @@ end process;
 stim_process: process
 begin
 
-        meas <= 100;
-        ref <= 20;
-        compare <= '0';
+        distance_raw <= 100;
+        calibrate <= '0';
         wait for 10ns;
-        meas <= 300;
-        ref <= 20;
-        compare <= '1';
+        distance_raw <= 300;
+        calibrate <= '1';
         wait for 10ns;
-        meas <= 100;
-        ref <= 40;
-        compare <= '1';
+        distance_raw <= 100;
+        calibrate <= '1';
         wait for 10ns;
-        meas <= 50;
-        ref <= 40;
-        compare <= '0';
+        distance_raw <= 50;
+        calibrate <= '0';
         wait for 10ns;
-        meas <= 300;
-        ref <= 40;
-        compare <= '1';
+        distance_raw <= 30;
+        calibrate <= '1';
         wait for 10ns;
-        meas <= 25;
-        ref <= 20;
-        compare <= '0';
+        distance_raw <= 25;
+        calibrate <= '0';
         wait for 10ns;
         wait;
 

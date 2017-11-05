@@ -31,6 +31,7 @@ entity DISTANCE_DEDUCER is
 	       COMPARE: in STD_LOGIC;
 	       REF:  in INTEGER;
 	       MEAS: in INTEGER;
+	       DISTANCE_RAW: out INTEGER;
 	       DISTANCE_D: out INTEGER;
 	       DISTANCE_X: out INTEGER   );
 	       
@@ -38,29 +39,31 @@ end DISTANCE_DEDUCER;
 
 architecture Behavioural of DISTANCE_DEDUCER is
 
-signal i_DISTANCE_X, i_DISTANCE_D: integer;
+signal i_DISTANCE_X, i_DISTANCE_D, i_DISTANCE_RAW: integer;
 
 begin
 
 
-process(COMPARE)
+sample: process(COMPARE)
 begin
           
                             if (COMPARE = '0') then 
-                            
-                                        i_DISTANCE_X <= (MEAS)+REF;   -- example distance mathematical expression for cm
-                                        i_DISTANCE_D <= (MEAS)+REF; -- example distance mathematical expression for mm 
+                                        
+                                        i_DISTANCE_RAW <= MEAS;
+                                        i_DISTANCE_X <= (MEAS)+REF;   -- example distance mathematical expression for cm REQUIRES CALIBRATION
+                                        i_DISTANCE_D <= (MEAS)+REF; -- example distance mathematical expression for mm REQUIRES CALIBRATION
                                         
                             end if;
                                        
             
 end process;
 
-process(CLK)
+up_date: process(CLK)
 begin
 
                            if(rising_edge(CLK)) then 
                                         
+                                        DISTANCE_RAW <= i_DISTANCE_RAW;
                                         DISTANCE_X <= i_DISTANCE_X;
                                         DISTANCE_D <= i_DISTANCE_D;
                           
