@@ -1,0 +1,35 @@
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity comparator is
+	port ( sig1: in std_logic_vector(3 downto 0); -- first input
+			sig2: in std_logic_vector(3 downto 0);	-- second input
+			less: out std_logic;	-- output if the result is less than
+			equal: out std_logic;	-- output if the result is equal to >>> not sure if necessary, could setup for <= and >= instead
+			greater: out std_logic -- output if the result is greater than
+			);
+			
+end comparator;
+
+architecture Behavioral of comparator is
+begin
+
+	process(sig1,sig2)
+	begin
+		if(sig1 > sig2) then -- the following should be relatively straightforward, trivial
+			greater <= '1';
+			equal <= '0';
+			less <= '1';
+		elsif(sig1 < sig2) then
+			less <= '1';
+			equal <= '0';
+			greater <= '0';
+		else
+			equal <= '1';
+			less <= '0';
+			greater <= '0';
+		endif;
+	end process;
+	
+end Behavioral;
+
