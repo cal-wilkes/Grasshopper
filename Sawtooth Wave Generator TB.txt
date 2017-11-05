@@ -1,0 +1,72 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity saw_tb is
+end saw_tb;
+
+architecture saw_tb is
+
+component saw is
+	port( clk: in std_logic;
+			reset: in std_logic;
+			compare: in std_logic;
+			reference: in integer;
+			measure: in integer
+			distance_x: out integer
+				);
+end component;
+
+
+signal clk: std_logic := '0';
+signal reset: std_logic := '0';
+signal compare: integer := "0";
+signal reference: integer := "0";
+signal measure: integer := "0";
+type int_array is array (0 to 2) of integer;
+signal distance : int_array;
+
+
+constant clk_period : time := 10 ns;
+
+
+begin
+
+	uut: saw
+		port map (
+					clk => clk,
+					reset => reset,
+					compare => compare,
+					reference => reference,
+					measure => measure,
+					distance_x => distance_x
+					);
+					
+					
+clk_process :process
+   begin
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+   end process; 
+   
+   
+stim_proc : process
+	begin
+	
+		reset => '0';
+		wait for 100 ns;
+		reset => '1';
+		wait for 100 ns;
+		reset => '0';
+		wait for 100 ns;
+		compare => '0';
+		wait for 100 ns;
+		compare => '1';
+		wait for 100 ns;
+		wait;
+end process;
+end;
+		
+		

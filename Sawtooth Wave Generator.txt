@@ -1,0 +1,60 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.numeric_std.all;
+
+entity saw is
+	port( clk: in std_logic;
+			reset: in std_logic;
+			compare: in std_logic;
+			reference: in integer;
+			measure: in integer
+			distance_x: out integer
+				);
+end saw;
+
+architecure Behavioral of saw is
+begin
+
+	type int_array is array (0 to 2) of integer;
+	signal distance : int_array;
+	signal amp: integer :=0;
+	signal counter, internal_counter: integer;
+	signal max_count: integer := 1000000;		
+
+
+process (CLK, compare) -- add in the reset handling 
+
+begin 
+
+			if(compare = '1') then
+				measure <= amp;
+				distance(2) = measure mod 10; -- have to double check how mod works
+				meansure <= measure / 10;
+				distance(1) = measure mod 10; -- also no fully sure what distance(0) is, pretty sure its the decimal point
+				measure <= measure / 10;
+				distance_x <= measure mod 10;
+			endif;
+					if(rising_edge(CLK)) then 
+                        
+					
+						
+							if((counter < 100000000) and (internal_counter = max_count)) then 
+								amp <= amp + 10;
+								counter <= counter+1;
+								internal_counter <= 0;
+                       
+							elsif(counter < 100000000) then                    
+								counter <= counter+1;
+								internal_counter <= internal_counter +1;
+                       
+							else
+								amp <= 0;
+								counter <= 0;
+								internal_counter <= 0;
+                             
+							end if;
+       
+					end if;
+                
+end process; 			
+			
