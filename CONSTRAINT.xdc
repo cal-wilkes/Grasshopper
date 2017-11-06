@@ -9,8 +9,8 @@ set_property PACKAGE_PIN W5 [get_ports clk]
 	create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports clk]
  
 ## Switches
-set_property PACKAGE_PIN V17 [get_ports {ENABLE}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {ENABLE}]
+set_property PACKAGE_PIN V17 [get_ports {SWITCH(2)}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SWITCH(2)}]
 #set_property PACKAGE_PIN V16 [get_ports {switches[1]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {switches[1]}]
 ##set_property PACKAGE_PIN W16 [get_ports {switches[2]}]					
@@ -37,10 +37,10 @@ set_property PACKAGE_PIN V17 [get_ports {ENABLE}]
 	##set_property IOSTANDARD LVCMOS33 [get_ports {switches[12]}]
 ##set_property PACKAGE_PIN U1 [get_ports {switches[13]}]					
 	##set_property IOSTANDARD LVCMOS33 [get_ports {switches[13]}]
-set_property PACKAGE_PIN T1 [get_ports {LEVEL_SWITCH(1)}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {LEVEL_SWITCH(1)}]
-set_property PACKAGE_PIN R2 [get_ports {LEVEL_SWITCH(0)}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {LEVEL_SWITCH(0)}]
+set_property PACKAGE_PIN T1 [get_ports {SWITCH(1)}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SWITCH(1)}]
+set_property PACKAGE_PIN R2 [get_ports {SWITCH(0)}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SWITCH(0)}]
  
 
 ## LEDs
@@ -108,10 +108,10 @@ set_property PACKAGE_PIN R2 [get_ports {LEVEL_SWITCH(0)}]
 
 
 ##Buttons
-set_property PACKAGE_PIN U18 [get_ports {RESET}]						
-	set_property IOSTANDARD LVCMOS33 [get_ports {RESET}]
-set_property PACKAGE_PIN T18 [get_ports {CALIBRATE}]						
-	set_property IOSTANDARD LVCMOS33 [get_ports {CALIBRATE}]
+set_property PACKAGE_PIN U18 [get_ports {BUTTON(0)}]						
+	set_property IOSTANDARD LVCMOS33 [get_ports {BUTTON(0)}]
+set_property PACKAGE_PIN T18 [get_ports {BUTTON(1)}]						
+	set_property IOSTANDARD LVCMOS33 [get_ports {BUTTON(1)}]
 #set_property PACKAGE_PIN W19 [get_ports {buttons[2]}]						
 	#set_property IOSTANDARD LVCMOS33 [get_ports {buttons[2]}]
 #set_property PACKAGE_PIN T17 [get_ports {buttons[2]}]						
@@ -157,8 +157,8 @@ set_property PACKAGE_PIN A14 [get_ports {COMPARE}]
 set_property PACKAGE_PIN A16 [get_ports {SAW_PWM}]					
 	set_property IOSTANDARD LVCMOS33 [get_ports {SAW_PWM}]
 ##Sch name = JB3
-set_property PACKAGE_PIN B15 [get_ports {SOLENOID_CONTROL}]					
-	set_property IOSTANDARD LVCMOS33 [get_ports {SOLENOID_CONTROL}]
+set_property PACKAGE_PIN B15 [get_ports {SOLENOID_CONTROL_SIG}]					
+	set_property IOSTANDARD LVCMOS33 [get_ports {SOLENOID_CONTROL_SIG}]
 ##Sch name = JB4
 #set_property PACKAGE_PIN B16 [get_ports {JB[3]}]					
 	#set_property IOSTANDARD LVCMOS33 [get_ports {JB[3]}]
