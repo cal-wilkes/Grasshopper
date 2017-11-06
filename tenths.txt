@@ -1,0 +1,168 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+
+entity tenths is
+	port( clk: in std_logic;
+			reset: in std_logic;
+			distance_0: in integer
+			vga_control: out std_logic_vector(11 downto 0);
+			);
+end tenths;
+
+architecture Behavioral of tenths is
+
+
+signal scan_line_x: in std_logic_vector(10 downto 0);
+signal scan_line_y: in std_logic_vector(10 downto 0);
+signal box_width: buffer std_logic_vector(8 downto 0);
+signal box_color: in std_logic_vector(11 downto 0);
+constant box_loc_x_min: std_logic_vector(9 downto 0) := "0000000000";
+constant box_loc_y_min: std_logic_vector(9 downto 0) := "0000000000";
+signal box_loc_x_max: std_logic_vector(9 downto 0);
+signal box_loc_y_max: std_logic_vector(9 downto 0);
+signal pixel_color: std_logic_vector(11 downto 0) := "000000000000";
+signal box_loc_x, box_loc_y: std_logic_vector(9 downto 0);
+
+box_loc_x <= box_loc_x + (8 * box_width);
+
+tenths : process(clk)
+begin
+	
+	if(box_width > "000100000") then
+		box_width <= "000100000";
+	end if;
+	
+	elsif(distance_0 = 0) then 
+		pixel_color <= box_color when ((((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- top of the zero
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + box_width)))
+										or
+										(((scan_line_x = box_loc_x) and (scan_line_x = box_loc_x + (2 * box_width))) and -- second, third and fourth level of the zero
+										((scan_line_y = box_loc_y + box_width) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (2 * box_width))) and -- bottom of the zero
+										((scan_line_y = box_loc_y + (4 * box_width)) and (scan_line_y < box_loc_y + (5 * box_width)))))
+										
+	elsif(distance_0 = 1) then
+		pixel_color <= box_color when ((scan_line_x =box_loc_x) and
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + (5 * box_width))))
+										
+	elsif(distance_0 = 2) then
+		pixel_color <= box_color when ((((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- top level of 2
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + box_width)))
+										or
+										((scan_line_x = box_loc_x + (4 * box_width)) and -- second level of 2
+										(scan_line_y = box_loc_y + box_width))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- third level of 2
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										((scan_line_x = box_loc_x) and -- fourth level of 2
+										(scan_line_y = box_loc_y + (3 * box_width)) and (scan_line_y < box_loc_y + (2 * box_width)))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- bottom level of 2
+										((scan_line_y = box_loc_y + (4 * box_width)) and (scan_line_y < box_loc_y + (5 * box_width)))))
+										
+	elsif(distance_0 = 3) then
+		pixel_color <= box_color when ((((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- top level of 3
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + box_width)))
+										or
+										((scan_line_x = box_loc_x + (2 * box_width)) and -- second level of 3
+										(scan_line_y = box_loc_y + box_width))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- third level of 3
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										((scan_line_x = box_loc_x + (2 * box_width)) and -- fourth level of 3
+										(scan_line_y = box_loc_y + (3 * box_width)) and (scan_line_y < box_loc_y + (4 * box_width)))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- bottom level of 3
+										((scan_line_y = box_loc_y + (4 * box_width)) and (scan_line_y < box_loc_y + (5 * box_width)))))
+										
+	elsif(distance_0 = 4) then
+		pixel_color <= box_color when (((scan_line_x = box_loc_x) or (scan_line_x = box_loc_x + (2 * box_width))) and -- top and second level of 4 -- double check
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + (2 * box_width))))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- third level of 4
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										((scan_line_x = box_loc_x + (2 * box_width)) and -- fourth and fifth level of 4
+										((scan_line_y >= box_loc_y + (3 * box_width)) and (scan_line_y < box_loc_y + (4 * box_width)))) 
+								
+	elsif(distance_0 = 5) then
+		pixel_color <= box_color when ((((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- top level of 5
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + box_width)))
+										or
+										((scan_line_x = box_loc_x) and -- second level of 5
+										(scan_line_y = box_loc_y + box_width))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- third level of 5
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										((scan_line_x = box_loc_x + (4 * box_width)) and -- fourth level of 5
+										(scan_line_y = box_loc_y + (3 * box_width)) and (scan_line_y < box_loc_y + (2 * box_width)))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- bottom level of 5
+										((scan_line_y = box_loc_y + (4 * box_width)) and (scan_line_y < box_loc_y + (5 * box_width)))))
+
+
+	elsif(distance_0 = 6) then
+		pixel_color <= box_color when ((scan_line_x = box_loc_x) and -- top and second level of 6
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + (2 * box_width))))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and --third level of 6
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3* box_width))))
+										or
+										(((scan_line_x = box_loc_x) or (scan_line_x = box_loc_x + (2 * box_width))) and -- fourth level of 6
+										((scan_line_y = box_loc_y + (3 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+
+	elsif(distance_0 = 7) then
+		pixel_color <= box_color when ((((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- top level of 7
+										((scan_line_y = box_loc_y) and (scan_line_x < box_loc_y + box_width)))
+										or
+										((scan_line_x = box_loc_x) and -- rest of 7
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + (5 * box_width)))))
+									
+	elsif(distance_0 = 8) then 
+		pixel_color <= box_color when ((((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- top of 8
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + box_width)))
+										or
+										(((scan_line_x = box_loc_x) and (scan_line_x = box_loc_x + (2 * box_width))) and -- second and fourth level of the 8
+										((scan_line_y = box_loc_y + box_width) or (scan_line_y = box_loc_y + (2 * box_width))))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- third level of 8
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (2 * box_width))) and -- top of the 8
+										((scan_line_y = box_loc_y + (4 * box_width)) and (scan_line_y < box_loc_y + (5 * box_width)))))
+								
+	elsif(distance_0 = 9) then
+		pixel_color <= box_color when (((scan_line_x >= box_loc_x) or (scan_line_x < box_loc_x + (2 * box_width))) and -- top level of 9 -- double check
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + (2 * box_width))))
+										or
+										(((scan_line_x = box_loc_x) or (scan_line_x = box_loc_x + (2 * box_width))) and -- second level of 9 -- double check
+										((scan_line_y >= box_loc_y) and (scan_line_y < box_loc_y + (2 * box_width))))
+										or
+										(((scan_line_x >= box_loc_x) and (scan_line_x < box_loc_x + (3 * box_width))) and -- third level of 9
+										((scan_line_y = box_loc_y + (2 * box_width)) and (scan_line_y < box_loc_y + (3 * box_width))))
+										or
+										((scan_line_x = box_loc_x + (2 * box_width)) and -- fourth and fifth level of 9
+										((scan_line_y >= box_loc_y + (3 * box_width)) and (scan_line_y < box_loc_y + (4 * box_width)))) 
+										
+	else
+		pixel_color <= "111111111111";
+	end if;
+	
+end process;
+
+vga_control(11 downto 8) <= pixel_color(11 downto 8);
+vga_control(7 downto 4) <= pixel_color(7 downto 4);
+vga_control(3 downto 0) <= pixel_color(3 downto 0);
+
+box_loc_x_max <= "1010000000" - box_width - 1;
+box_loc_y_max <= "0111100000" - box_width - 1;
+
+end Behavioral;
+										

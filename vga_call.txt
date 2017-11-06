@@ -1,0 +1,89 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+entity vga_call is
+	port( clk: in std_logic;
+			reset: in std_logic;
+			
+			);
+end vga_call;	
+
+architecture Behavioral of vga_call is
+	
+	
+	component tens is
+		port(clk: in std_logic;
+			reset: in std_logic;
+			distance_10: in integer
+			vga_control: out std_logic_vector(11 downto 0);
+			);
+	end component;
+	
+	component ones is
+		port(clk: in std_logic;
+			reset: in std_logic;
+			distance_1: in integer
+			vga_control: out std_logic_vector(11 downto 0);
+			);
+	end component;
+	
+	component tenths is
+		port(clk: in std_logic;
+			reset: in std_logic;
+			distance_0: in integer
+			vga_control: out std_logic_vector(11 downto 0);
+			);
+	end component;
+	
+	
+	type int_array is array (0 to 2) of integer;
+	signal distance : int_array;
+	
+	begin
+	
+		aothos: tens
+			port map( 
+						clk => clk,
+						reset => reset,
+						distance_10 => distance(2),
+						--vga_control
+						);
+						
+		porthos: ones
+			port map( 
+						clk => clk,
+						reset => reset,
+						distance_1 => distance(1),
+						--vga_control
+						);
+
+		aramis: tenths
+			port map( 
+						clk => clk,
+						reset => reset,
+						distance_0 => distance(0),
+						--vga_control
+						);				
+						
+						
+					
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
