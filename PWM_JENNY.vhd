@@ -5,21 +5,21 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity PWM_JENNY is			
 		Port (    
-		          num_of_cycles: in integer;
-				  clk : in  STD_LOGIC;
-				  reset : in  STD_LOGIC;
-				  PWM : out  STD_LOGIC
+		          num_of_cycles: in integer;            -- indicates the number of system clock cycles that the output is set high for
+				  clk : in  STD_LOGIC;          -- system clock @ 100 MHz
+				  reset : in  STD_LOGIC;        -- system reset
+				  PWM : out  STD_LOGIC          -- Pulse width modulated output signal 
 			);
 			
 end PWM_JENNY;
 
 architecture Behavioural of PWM_JENNY is 
 
-signal counter: integer;
-signal max_counter: integer := 999;
+signal counter: integer;                                     -- internal system clock counter
+signal max_counter: integer := 999;                           -- number of system clock cycles per period 
 
 begin
-
+ 
 process(CLK, RESET)
 begin
 			if(reset = '1') then 
@@ -27,13 +27,13 @@ begin
 			
 			elsif(rising_edge(CLK)) then 
 			
-					if((counter < max_counter) and (counter < num_of_cycles-1)) then
-						counter <= counter + 1;
-						PWM <= '1';
+					if((counter < max_counter) and (counter < num_of_cycles-1)) then       -
+						counter <= counter + 1;                                 
+						PWM <= '1';                                                          -- set output to logic high
 					
 					elsif ((counter < max_counter) and (counter >= num_of_cycles-1)) then 
 						counter <= counter + 1;
-						PWM <= '0';
+						PWM <= '0'; 								-- set output to logic low 
 					
 					else
 					
