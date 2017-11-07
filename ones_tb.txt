@@ -1,0 +1,77 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.std_logic_arith.all;
+use ieee.std_logic_unsigned.all;
+
+entity ones_tb is
+end ones_tb;
+
+architecture behavior of ones_tb is
+
+	component ones is
+		port( clk: in std_logic;
+			reset: in std_logic;
+			distance_1: in integer;
+			vga_control: out std_logic_vector(11 downto 0);
+			);
+	end component;
+	
+	
+	signal clk : std_logic := '0';
+	signal reset : std_logic := '0';
+	signal distance_1 : integer;
+	
+	signal vga_control : std_logic_vector(11 downto 0);
+	
+	constant clk_period : time := 10 ns;
+	
+begin
+
+	uut: ones
+		port map(
+					clk => clk,
+					reset => reset,
+					distance_1 => distance_1,
+					vga_control => vga_control
+					);
+					
+	clk_process : process
+	begin	
+		clk <= '0';
+		wait for clk_period/2;
+		clk <= '1';
+		wait for clk_period/2;
+	end process;
+	
+	stim_proc : process
+	begin
+		
+		reset <= '0';
+		wait for 100 ns;
+		reset <= '1';
+		wait for 100 ns;
+		reset <= '0';
+		
+		distance_1 <= '0';
+		wait for 100 ns;
+		distance_1 <= '1;
+		wait for 100 ns;
+		distance_1 <= '2';
+		wait for 100 ns;
+		distance_1 <= '3';
+		wait for 100 ns;
+		distance_1 <= '4';
+		wait for 100 ns;
+		distance_1 <= '5';
+		wait for 100 ns;
+		distance_1 <= '6';
+		wait for 100 ns;
+		distance_1 <= '7';
+		wait for 100 ns;
+		distance_1 <= '8';
+		wait for 100 ns;
+		distance_1 <= '9';
+		wait for 100 ns;
+		wait;
+	end process;
+end;
