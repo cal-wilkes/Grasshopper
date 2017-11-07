@@ -1,3 +1,24 @@
+--Inputs: CLK: STD_LOGIC 
+ --           RESET: STD_LOGIC 
+ --           COMPARE: STD_LOGIC
+ --           REFERENCE: INTEGER
+ --           MEAS: INTEGER
+
+--The module receives both the system clock and reset signals. The module also receives
+--a signal COMPARE from the ADC circuitry which signals for the module to record the current
+--value of the input signal MEAS which is proportional to the current voltage out of the Saw Wave 
+--Generator Module. The module finally receives a signal, REFERENCE which is used as the calibration point. 
+
+--Outputs: DISTANCE: Array of 3 Integers
+      --          DISTANCE_X: Integer
+
+--The module outputs both a 3 integer array, for which the most significant
+--index represents the tens of centimetres position and the last significant index
+--represents the tenths of centimetres positions to be used by the VGA Controller Module,
+--and a single integer which represents the measurement with only a 1 cm resolution to be used by
+--the Solenoid Control Module.
+
+
 
 library ieee;
 use ieee.std_logic_1164.all;
