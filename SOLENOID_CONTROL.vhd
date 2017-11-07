@@ -7,10 +7,10 @@ use ieee.numeric_std.all;
 entity SOLENOID_CONTROL is
 	port(   CLK: in std_logic; 
 			RESET: in std_logic;
-			ENABLE: in STD_LOGIC;
-			DISTANCE_X: in INTEGER;
-		    LEVEL: in INTEGER;
-			SOLENOID_CONTROL_SIGNAL: out std_logic);
+			ENABLE: in STD_LOGIC;						-- enable actuator signal, otherwise the system will only disaplay the measured distance 
+			DISTANCE_X: in INTEGER;						-- current distance measurement 
+		        LEVEL: in INTEGER;						-- incoming level setting signal which corresponds to a distance at which the solenoid is actuated
+			SOLENOID_CONTROL_SIGNAL: out std_logic); 			-- signal that controls operation of the solenoid
 end SOLENOID_CONTROL;
 
 architecture Behavioural of SOLENOID_CONTROL is
@@ -25,6 +25,8 @@ component PWM_JENNY is
 			
 end component;
 
+	
+-- internal signals
 signal amp: integer;
 signal counter, trigger: integer;
 
@@ -34,6 +36,7 @@ signal counter, trigger: integer;
 begin
 
 
+-- intstantiation of PWM signal generator used to control solenoid through a BJT
 saw_jenny: PWM_JENNY
         PORT MAP (
                   num_of_cycles => amp,
@@ -60,8 +63,8 @@ begin
                  trigger <= 1;                                                 -- actuate the solenoid
                  
                  
-            elsif((trigger = 1)  and (counter < 500000000)) then               -- adjust counter limits for simulationS
-                 amp <= 1000;                                                     -- can be adjusted to control solenoid 
+            elsif((trigger = 1)  and (counter < 500000000)) then               -- adjust counter limits for simulations
+                 amp <= 1000;                                                     -- can be adjusted to control solenoid, corresponds to a duty cycle out of 1000
                  counter <= counter +1;                                           -- increase counter
             
             else
