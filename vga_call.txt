@@ -58,16 +58,16 @@ end component;
 	signal distance : int_array;
 	signal vga_blank : std_logic;
 	signal scan_line_x, scan_line_y: STD_LOGIC_VECTOR(10 downto 0);
-	signal i_pixel_clk: std_logic;                                            -- please look at this signal, it doesnt make sense how 											its used
+	signal i_pixel_clk: std_logic;                                            -- please look at this signal, it doesnt make sense 												--how its used
 	signal disp_10: std_logic_vector(11 downto 0);                         -- what does this signal do?
 	signal disp_1: std_logic_vector(11 downto 0);                          -- what does this signal do?
 	signal disp_0: std_logic_vector(11 downto 0); 			       -- what does this signal do?
 	
-	begin               							  -- please properly format this code
+begin               							  -- please properly format this code
 	
 	
 		VGA_SYNC: sync_signals_generator                            										
-			Port map( 	pixel_clk   => i_pixel_clk,          -- you are feeding this port garbage this signal has not 									                properly been defined
+			Port map             ( 	pixel_clk   => i_pixel_clk,          -- you are feeding this port garbage this signal has not 									                properly been defined
 						reset       => reset,         
 						hor_sync    => hsync,         
 						ver_sync    => vsync,
@@ -103,7 +103,7 @@ end component;
 						);				
 						
 						
-		vga_control_0 <= "000000000000" when (vga_blank = '1') else disp_0;                   -- why are you trying to assign a        														value to an input signal 
+		--vga_control_0 <= "000000000000" when (vga_blank = '1') else disp_0;            -- why are you trying to assign a        												---value to an input signal 
 		vga_control_1 <= "000000000000" when (vga_blank = '1') else disp_1;
 		vga_control_10 <= "000000000000" when (vga_blank = '1') else disp_10;
 		
