@@ -1,22 +1,29 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/05/2017 11:22:13 AM
--- Design Name: 
--- Module Name: DISTANCE_DEDUCER - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
+--This module is responsible for the translation of the ADC value to a distance measurement with accuracy to the 0.1cm scale.
+--The module receives an integer ADC value which its then converts to a distance measurement in centimetres. The module does
+--this using a calibration point and a mathematical module based on this calibration point to determine all other distance.
+--This could be achieved through an equation or a lookup table. I suggest trying to implement both the lookup table and equation
+--so we have the option to determine which works more effectively. The module outputs both a 3 integer array, for which the most 
+--significant index represents the tens of centimetres position and the last significant index represents the tenths of centimetres
+--positions to be used by the VGA Controller Module, and a single integer which represents the measurement with only a 1 cm resolution
+--to be used by the Solenoid Control Module. 
+
+
+--Inputs: CLK: STD_LOGIC 
+--           RESET: STD_LOGIC 
+--            COMPARE: STD_LOGIC
+--            REF: INTEGER
+--            MEAS: INTEGER
+
+--The module receives both the system clock and reset signals. The module also receives a signal COMPARE from the ADC circuitry
+--which signals for the module to record the current value of the input signal MEAS which is proportional to the current voltage
+--out of the Saw Wave Generator Module. The module finally receives a signal, REFERENCE which is used as the calibration point. 
+
+--Outputs: DISTANCE_D: Integer
+--                DISTANCE_X: Integer
+
+--The module outputs both a 3 integer array, for which the most significant index represents the tens of centimetres position and
+--the last significant index represents the tenths of centimetres positions to be used by the VGA Controller Module, and a single
+--integer which represents the measurement with only a 1 cm resolution to be used by the Solenoid Control Module.
 
 
 library ieee;
