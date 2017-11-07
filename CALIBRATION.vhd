@@ -29,8 +29,8 @@ entity CALIBRATION is
 	       CLK: in STD_LOGIC;
 	       RESET: in STD_LOGIC;
 	       CALIBRATE: in STD_LOGIC;
-	       DISTANCE_RAW:  in INTEGER;
-	       REF: out INTEGER   );
+	       DISTANCE_RAW:  in INTEGER;    -- incoming ADC sampled value 
+	       REF: out INTEGER   );        -- signal that corresponds to ADC value at predetermined distance
 	       
 end CALIBRATION;
 
@@ -45,7 +45,7 @@ begin
 
         if(CALIBRATE = '1') then
                     
-                        i_REF <= DISTANCE_RAW;
+                        i_REF <= DISTANCE_RAW;      -- sample and hold the ADC value at predetermine calibration distance
         
         end if;            
                 
@@ -56,7 +56,7 @@ up_date_REF: process(CLK)
 begin
          if(rising_edge(CLK)) then
          
-                        REF <= i_REF;
+                        REF <= i_REF;           -- update reference value for sensor calibration
          
          end if;
                         
