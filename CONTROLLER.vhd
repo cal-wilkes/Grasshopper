@@ -1,22 +1,6 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/05/2017 03:57:29 PM
--- Design Name: 
--- Module Name: CONTROLLER - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
+--This module should facilitate the connections between the inner modules of the ports, buttons,
+--and switches on the FPGA. It should also facilitate the connection of signals between subsystem
+--module within the over architecture. Review previous labs for example top level controller modules.
 
 
 library IEEE;
