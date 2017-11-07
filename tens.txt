@@ -17,7 +17,7 @@ architecture Behavioral of tens is
 
 signal scan_line_x: in std_logic_vector(10 downto 0);
 signal scan_line_y: in std_logic_vector(10 downto 0);
-signal box_width: buffer std_logic_vector(8 downto 0);
+constant box_width: std_logic_vector(8 downto 0) := "000100000";
 signal box_color: in std_logic_vector(11 downto 0);
 constant box_loc_x_min: std_logic_vector(9 downto 0) := "0000000000";
 constant box_loc_y_min: std_logic_vector(9 downto 0) := "0000000000";

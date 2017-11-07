@@ -59,6 +59,10 @@ end component;
 	signal vga_blank : std_logic;
 	signal scan_line_x, scan_line_y: STD_LOGIC_VECTOR(10 downto 0);
 	signal i_pixel_clk: std_logic;
+	signal disp_10: std_logic_vector(11 downto 0);
+	signal disp_1: std_logic_vector(11 downto 0);
+	signal disp_0: std_logic_vector(11 downto 0);
+	
 	begin
 	
 	
@@ -71,7 +75,7 @@ end component;
 						scan_line_x => scan_line_x,
 						scan_line_y => scan_line_y,
 						clk => clk
-			  );
+						);
 			  
 			  
 		aothos: tens
@@ -99,9 +103,18 @@ end component;
 						);				
 						
 						
-
-
-
+		vga_control_0 <= "000000000000" when (vga_blank = '1') else disp_0;
+		vga_control_1 <= "000000000000" when (vga_blank = '1') else disp_1;
+		vga_control_10 <= "000000000000" when (vga_blank = '1') else disp_10;
+		
+		process(vga_control_0, vga_control_1, vga_control_10)
+		begin
+		
+			disp_0 <= vga_control_0;
+			disp_1 <= vga_control_1;
+			disp_10 <= vga_control_10;
+		
+		end process;
 
 end Behavioral;					
 						
