@@ -1,6 +1,12 @@
---This module is responsible for controlling the solenoid which will be used to move the pebble out of reach of the player. The module is responsible for setting the current level. The level is an integer which determines the distance measurement at which the solenoid will be activated. Therefore the module needs to have a comparison between the DISTANCE_X input and the LEVEL input and in response to an equal condition the module should output a PWM square wave output at a frequency to be determined based on design of the electromechanical module. The module should output the PWM signal for a predetermined amount of time which is determined from a number of clock cycles. (recall: the clock runs at 100MHz that is 10^8 clock cycles per second) 
+--This module is responsible for controlling the solenoid which will be used to move the pebble out of reach of the player. 
+--The module is responsible for setting the current level. The level is an integer which determines the distance measurement 
+--at which the solenoid will be activated. Therefore the module needs to have a comparison between the DISTANCE_X input and 
+--the LEVEL input and in response to an equal condition the module should output a PWM square wave output at a frequency to be
+--determined based on design of the electromechanical module. The module should output the PWM signal for a predetermined amount
+--of time which is determined from a number of clock cycles. (recall: the clock runs at 100MHz that is 10^8 clock cycles per second) 
 
---Additionally this module should have the ability to be disabled using the ENABLE signal so that the system is not inadvertently triggered. 
+--Additionally this module should have the ability to be disabled using the ENABLE signal so that the system is not inadvertently 
+--triggered. 
 
 --Inputs: CLK: STD_LOGIC
 --            RESET: STD_LOGIC 
