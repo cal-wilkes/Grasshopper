@@ -6,7 +6,11 @@ use ieee.std_logic_unsigned.all;
 entity vga_call is
 	port( clk: in std_logic;
 			reset: in std_logic;
-			
+			vga_control_10: in std_logic_vector(11 downto 0);
+			vga_control_1: in std_logic_vector(11 downto 0);
+			vga_control_0: in std_logic_vector(11 downto 0)
+			hsync: out STD_LOGIC;
+            vsync: out STD_LOGIC;
 			);
 end vga_call;	
 
@@ -37,18 +41,45 @@ architecture Behavioral of vga_call is
 			);
 	end component;
 	
+	component sync_signals_generator is
+    Port ( pixel_clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           hor_sync: out STD_LOGIC;
+           ver_sync: out STD_LOGIC;
+           blank: out STD_LOGIC;
+           scan_line_x: out STD_LOGIC_VECTOR(10 downto 0);
+           scan_line_y: out STD_LOGIC_VECTOR(10 downto 0);
+           clk: in std_logic
+		  );
+end component;
+	
 	
 	type int_array is array (0 to 2) of integer;
 	signal distance : int_array;
-	
+	signal vga_blank : std_logic;
+	signal scan_line_x, scan_line_y: STD_LOGIC_VECTOR(10 downto 0);
+	signal i_pixel_clk: std_logic;
 	begin
 	
+	
+		VGA_SYNC: sync_signals_generator
+			Port map( 	pixel_clk   => i_pixel_clk,
+						reset       => reset,
+						hor_sync    => hsync,
+						ver_sync    => vsync,
+						blank       => vga_blank,
+						scan_line_x => scan_line_x,
+						scan_line_y => scan_line_y,
+						clk => clk
+			  );
+			  
+			  
 		aothos: tens
 			port map( 
 						clk => clk,
 						reset => reset,
 						distance_10 => distance(2),
-						--vga_control
+						vga_control => vga_control_10
 						);
 						
 		porthos: ones
@@ -56,7 +87,7 @@ architecture Behavioral of vga_call is
 						clk => clk,
 						reset => reset,
 						distance_1 => distance(1),
-						--vga_control
+						vga_control => vga_control_1
 						);
 
 		aramis: tenths
@@ -64,11 +95,15 @@ architecture Behavioral of vga_call is
 						clk => clk,
 						reset => reset,
 						distance_0 => distance(0),
-						--vga_control
+						vga_control => vga_control_0
 						);				
 						
 						
-					
+-- need stuff here, not sure how to handle the output shit
+
+
+
+end Behavioral;					
 						
 						
 						
