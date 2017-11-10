@@ -366,4 +366,7 @@ red   <= pixel_color(11 downto 8);
 green <= pixel_color(7 downto 4);
 blue  <= pixel_color(3 downto 0);
 
+box_loc_x_max <= "1010000000" - box_width - 1;
+box_loc_y_max <= "0111100000" - box_width - 1;
+
 end Behavioral;

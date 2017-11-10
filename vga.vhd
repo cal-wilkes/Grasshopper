@@ -1,10 +1,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity vga_module is
     Port (  clk : in  STD_LOGIC;
-            buttons: in STD_LOGIC_VECTOR(2 downto 0);
-            switches: in STD_LOGIC_VECTOR(13 downto 0);
             red: out STD_LOGIC_VECTOR(3 downto 0);
             green: out STD_LOGIC_VECTOR(3 downto 0);
             blue: out STD_LOGIC_VECTOR(3 downto 0);
