@@ -6,9 +6,9 @@ use ieee.std_logic_unsigned.all;
 entity lookup_tb is
 end lookup_tb;
 
-architecture behaviour of lookup_tb is
+architecture behaviour of lookup is
 
-	component lookup_tb
+	component lookup
 		port( clk: in std_logic;
 				reset: in std_logic;
 				ones: in integer;
@@ -26,12 +26,12 @@ architecture behaviour of lookup_tb is
 	
 	constant clk_period : time := 10 ns;
 	signal clk: std_logic := '0';
-	signal reset: std_logic "= '0';
+	signal reset: std_logic := '0';
 	
 	signal scan_line_x: std_logic_vector(10 downto 0) := "00000000000";
 	signal scan_line_y: std_logic_vector(10 downto 0) := "00000000000";
 	signal colour: std_logic_vector(11 downto 0) := "000000000000";
-	signal tablevalue: in std_logic_vector(8 downto 0);
+	signal tablevalue: std_logic_vector(8 downto 0);
 	signal ones: integer:= 0;
 	signal tens: integer:= 0;
 	signal tenths: integer:= 0;
@@ -40,10 +40,10 @@ architecture behaviour of lookup_tb is
 	signal blue: std_logic_vector(3 downto 0);
 	signal green: std_logic_vector(3 downto 0);
 	
-	begin
+begin
 	
-	uut: lookup
-		port map( clk => clk,
+	uut: lookup port map ( 
+	                clk => clk,
 					reset => reset,
 					scan_line_x => scan_line_x,
 					scan_line_y => scan_line_y,
@@ -55,15 +55,14 @@ architecture behaviour of lookup_tb is
 					red => red,
 					blue => blue,
 					green => green
-					);
-					
+					);				
 	clk_process: process
 	begin
 		clk <= '0';
 		wait for clk_period/2;
 		clk <= '1';
 		wait for clk_period/2;
-	end;
+	end process;
 	
 	stim_proc: process
 	begin
@@ -137,4 +136,6 @@ architecture behaviour of lookup_tb is
 		tenths <= 9;
 		wait for 100 ns;
 		wait;
+		
 	end process;
+	END;
