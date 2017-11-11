@@ -334,14 +334,17 @@ begin
         --first digit
         if(x_counter >= box_loc_x and x_counter < (box_loc_x + (17 * size))) then
             draw <= i_tens;
+			pixel_colour <= colour;
         
         --second digit
         elsif(x_counter >= (box_loc_x + (17 * size)) and x_counter < (box_loc_x + (34 * size))) then
             draw <= i_ones;
+			pixel_colour <= colour;
 
         -- third digit      
         elsif(x_counter >= (box_loc_x + (51 * size)) and x_counter < (box_loc_x + (68 * size))) then
-            draw <= i_tenths;				
+            draw <= i_tenths;	
+			pixel_colour <= colour;
 		end if;
 		
 		end if;
