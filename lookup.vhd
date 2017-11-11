@@ -218,8 +218,71 @@ begin
 	-- need some way to take the numbers and feed those values into i_tens, i_ones, i_tenths, maybe with a case statement
 	-- needs to take tens, ones, tenths (the inputs) and find a way to feed them into i_tens, i_ones, i_tenths and fills in those matrices with the lookup table values
 	-- the rest should be handled with the display
+	if(tens = '0')then
+		i_tens <= zero;
+	elsif(tens = '1')then
+		i_tens <= one;
+	elsif(tens = '2')then
+		i_tens <= two;
+	elsif(tens = '3')then
+		i_tens <= three;
+	elsif(tens = '4')then
+		i_tens <= four;
+	elsif(tens = '5')then
+		i_tens <= five;
+	elsif(tens = '6')then
+		i_tens <= six;
+	elsif(tens = '7')then
+		i_tens <= seven;		
+	elsif(tens = '8')then
+		i_tens <= eigth;
+	else
+		i_tens <= nine;
+	end if;
 	
+	if(ones = '0')then
+		i_ones <= zero;
+	elsif(ones = '1')then
+		i_ones <= one;
+	elsif(ones = '2')then
+		i_ones <= two;
+	elsif(ones = '3')then
+		i_ones <= three;
+	elsif(ones = '4')then
+		i_ones <= four;
+	elsif(ones = '5')then
+		i_ones <= five;
+	elsif(ones = '6')then
+		i_ones <= six;
+	elsif(ones = '7')then
+		i_ones <= seven;		
+	elsif(ones = '8')then
+		i_ones <= eigth;
+	else
+		i_ones <= nine;
+	end if;
 	
+	if(tenths = '0')then
+		i_tenths <= zero;
+	elsif(tenths = '1')then
+		i_tenths <= one;
+	elsif(tenths = '2')then
+		i_tenths <= two;
+	elsif(tenths = '3')then
+		i_tenths <= three;
+	elsif(tenths = '4')then
+		i_tenths <= four;
+	elsif(tenths = '5')then
+		i_tenths <= five;
+	elsif(tenths = '6')then
+		i_tenths <= six;
+	elsif(tenths = '7')then
+		i_tenths <= seven;		
+	elsif(tenths = '8')then
+		i_tenths <= eigth;
+	else
+		i_tenths <= nine;
+	end if;
 	
 	
 	--getting the first digit		
