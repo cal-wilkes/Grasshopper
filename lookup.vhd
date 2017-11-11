@@ -21,21 +21,23 @@ end lookup;
 
 
 architecture behaviour of lookup is
-type matrix is array(17 downto 0, 13 downto 0);
+
+type vec is array (13 downto 0) of std_logic;
+type matrix is array(17 downto 0) of vec;
 
 signal pixel_colour: std_logic_vector(11 downto 0);
 
-signal ones: matrix;
-signal tens: matrix;
-signal tenths: matrix;
+signal i_ones: matrix;
+signal i_tens: matrix;
+signal i_tenths: matrix;
 
-constant size: std_logic_vector:= '1000';
+constant size: std_logic_vector:= "1000";
 signal counter: std_logic_vector := size;				   
 							   							
 							   
 constant nine: matrix:= 	   (
-							   (0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,0,0),	
-							   (0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0),
+							   ('0','0','0','0','0','1','1','1','1','1','1','1','0','0','0','0','0','0'),	
+							   ('0','0','0','0','1','1','1','1','1,1,1,1,1,0,0,0,0,0),
 							   (0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0),
 							   (0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0),
 							   (0,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0),
@@ -221,5 +223,4 @@ green <= pixel_colour(7 downto 4);
 blue <= pixel_colour(3 downto 0);
 
 end behaviour;
-							
-							   
+					   
