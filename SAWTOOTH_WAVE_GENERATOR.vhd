@@ -1,24 +1,3 @@
---Inputs: CLK: STD_LOGIC 
- --           RESET: STD_LOGIC 
- --           COMPARE: STD_LOGIC
- --           REFERENCE: INTEGER
- --           MEAS: INTEGER
-
---The module receives both the system clock and reset signals. The module also receives
---a signal COMPARE from the ADC circuitry which signals for the module to record the current
---value of the input signal MEAS which is proportional to the current voltage out of the Saw Wave 
---Generator Module. The module finally receives a signal, REFERENCE which is used as the calibration point. 
-
---Outputs: DISTANCE: Array of 3 Integers
-      --          DISTANCE_X: Integer
-
---The module outputs both a 3 integer array, for which the most significant
---index represents the tens of centimetres position and the last significant index
---represents the tenths of centimetres positions to be used by the VGA Controller Module,
---and a single integer which represents the measurement with only a 1 cm resolution to be used by
---the Solenoid Control Module.
-
-
 
 library ieee;
 use ieee.std_logic_1164.all;
@@ -26,16 +5,17 @@ use ieee.numeric_std.all;
 
 
 entity SAWTOOTH_WAVE_GENERATOR is
-	port(   clk: in std_logic;   					-- system clock 
-			reset: in std_logic;  				-- system reset
-			SAW_PWM: out std_logic);			-- saw wave signal 
+	port(   clk: in std_logic; 
+			reset: in std_logic;
+			MEAS: out INTEGER;
+			SAW_PWM: out std_logic);
 end SAWTOOTH_WAVE_GENERATOR;
 
 architecture Behavioural of SAWTOOTH_WAVE_GENERATOR is
 
-component PWM_JENNY is							
+component PWM_JENNY is			
 		Port ( 
-		          num_of_cycles: in integer;                    
+		          num_of_cycles: in integer;
 				  clk : in  STD_LOGIC;
 				  reset : in  STD_LOGIC;
 				  PWM : out  STD_LOGIC
@@ -43,7 +23,9 @@ component PWM_JENNY is
 			
 end component;
 
-signal amp: integer :=0;
+
+
+signal amp, temp: integer :=0;
 signal counter, internal_counter: integer;
 
 
@@ -51,14 +33,17 @@ signal counter, internal_counter: integer;
 begin
 
 
-saw_jenny: PWM_JENNY						-- instantiation of pwm signal generator 
+
+
+saw_jenny: PWM_JENNY
         PORT MAP (
                   num_of_cycles => amp,
                   CLK => CLK,
                   reset => reset,
                   PWM => SAW_PWM
         );
-        
+
+
  
                
         
@@ -66,22 +51,27 @@ process (CLK)
 
 begin 
 
-                if(rising_edge(CLK)) then  		
+
+
+                if(rising_edge(CLK)) then 
                 
-                       if(RESET = '1') then               						-- reset behaviour
+      
+                                
+                       if(RESET = '1') then               
                              counter <= 0;
                              internal_counter <= 0;
                              amp <= 0;
                                       
                 
                        elsif((counter < 100000000) and (internal_counter = 1000000)) then 
-                             amp <= amp + 10;                        					-- increase amplitude output signal to create linear ramping 
+                             amp <= amp + 10;
                              counter <= counter+1;
                              internal_counter <= 0;
                              
                        
                        elsif(counter < 100000000) then                    
                              counter <= counter+1;
+                             meas <= amp;
                              internal_counter <= internal_counter +1;
                              
                        
@@ -94,8 +84,7 @@ begin
        
                 end if;
                 
-end process;                
-                
+end process;  
 
 
 end behavioural;

@@ -11,8 +11,7 @@ entity sync_signals_generator is
            ver_sync: out STD_LOGIC;
            blank: out STD_LOGIC;
            scan_line_x: out STD_LOGIC_VECTOR(10 downto 0);
-           scan_line_y: out STD_LOGIC_VECTOR(10 downto 0);
-           clk: in std_logic
+           scan_line_y: out STD_LOGIC_VECTOR(10 downto 0)
           );
 end sync_signals_generator;
 
@@ -37,13 +36,13 @@ signal current_ver_pos: std_logic_vector(10 downto 0) := (others => '0');
 signal hor_blank, ver_blank, i_blank: std_logic;
 
 begin
-	PixelPosition: process(pixel_clk, reset, clk)
+	PixelPosition: process(pixel_clk, reset)
 	begin
 	    if (reset = '1') then
             -- Reset all outputs
             current_hor_pos <= (others => '0');
             current_ver_pos <= (others => '0');	    
-		elsif (rising_edge(clk) and (pixel_clk = '1')) then
+		elsif (rising_edge(pixel_clk)) then
             if current_hor_pos < h_sync_pulse-1 then
                 current_hor_pos <= current_hor_pos + 1;
             else

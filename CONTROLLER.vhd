@@ -1,6 +1,22 @@
---This module should facilitate the connections between the inner modules of the ports, buttons,
---and switches on the FPGA. It should also facilitate the connection of signals between subsystem
---module within the over architecture. Review previous labs for example top level controller modules.
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 11/05/2017 03:57:29 PM
+-- Design Name: 
+-- Module Name: CONTROLLER - Behavioral
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
 
 
 library IEEE;
@@ -17,16 +33,37 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity CONTROLLER is
         PORT(
-                CLK: in STD_LOGIC;
+                clk: in STD_LOGIC;
                 BUTTON: in STD_LOGIC_VECTOR(1 downto 0);
                 SWITCH: in STD_LOGIC_VECTOR(2 downto 0);
                 COMPARE: in STD_LOGIC;
                 SAW_PWM: out STD_LOGIC;
+                r: out STD_LOGIC_VECTOR(3 downto 0);
+                g: out STD_LOGIC_VECTOR(3 downto 0);
+                b: out STD_LOGIC_VECTOR(3 downto 0);
+                hs : out STD_LOGIC;
+                vs : out STD_LOGIC;
                 SOLENOID_CONTROL_SIG: out STD_LOGIC   );
 
 end CONTROLLER;
 
 architecture Behavioral of CONTROLLER is
+
+component vga_module is
+    Port (   clk : in  STD_LOGIC;
+           reset : in  STD_LOGIC;
+           P_1: in integer;
+           P_2: in integer;
+           P_3: in integer;
+           red: out STD_LOGIC_VECTOR(3 downto 0);
+           green: out STD_LOGIC_VECTOR(3 downto 0);
+           blue: out STD_LOGIC_VECTOR(3 downto 0);
+           hsync: out STD_LOGIC;
+           vsync: out STD_LOGIC
+	 );
+	 
+end component;
+
 
 
 component multi_debounce IS
@@ -44,7 +81,7 @@ component SOLENOID_CONTROL is
 	port(   CLK: in std_logic; 
 			RESET: in std_logic;
 			ENABLE: in STD_LOGIC;
-			DISTANCE_X: in INTEGER;
+			DISTANCE_RAW: in INTEGER;
 		    LEVEL: in INTEGER;
 			SOLENOID_CONTROL_SIGNAL: out std_logic);
 end component;
@@ -77,8 +114,12 @@ component DISTANCE_DEDUCER is
 	       REF:  in INTEGER;
 	       MEAS: in INTEGER;
 	       DISTANCE_RAW: out INTEGER;
-	       DISTANCE_D: out INTEGER;
-	       DISTANCE_X: out INTEGER   );
+	       DISTANCE_ONES: out INTEGER;
+           DISTANCE_TENS: out INTEGER;
+           DISTANCE_TENTHS: out INTEGER --;
+	   --    DISTANCE_D: out INTEGER;
+	     --  DISTANCE_X: out INTEGER  
+	      );
 	       
 end component;
 
@@ -87,6 +128,7 @@ end component;
 component SAWTOOTH_WAVE_GENERATOR is
 	port(   clk: in std_logic; 
 			reset: in std_logic;
+			MEAS: out INTEGER;
 			SAW_PWM: out std_logic);
 end component;
 
@@ -99,7 +141,8 @@ end component;
 signal D_BUTTON, LEVEL_SWITCHES: STD_LOGIC_VECTOR(1 downto 0);
 signal D_SWITCH: STD_LOGIC_VECTOR(2 downto 0);
 signal RESET, ENABLE, CALIBRATER: STD_LOGIC;
-signal DISTANCE_X, LEVEL, ref, DISTANCE_RAW, meas, DISTANCE_D: INTEGER;
+signal DISTANCE_X, LEVEL, ref, DISTANCE_RAW, meas, meas_1, DISTANCE_D, one, ten, tenth: INTEGER;
+
 
 
 begin
@@ -108,6 +151,20 @@ RESET <= D_BUTTON(0);
 LEVEL_SWITCHES <= D_SWITCH(1 downto 0);
 ENABLE <= D_SWITCH(2);
 CALIBRATER <= D_BUTTON(1);
+
+VGA: vga_module 
+    Port Map (   clk => clk,
+           reset => reset,
+           P_1 => one,
+           P_2 => ten,
+           P_3 => tenth,
+           red => r,
+           green => g,
+           blue => b,
+           hsync => hs,
+           vsync => vs
+	 );
+	 
 
 MD: multi_debounce 
   PORT MAP(
@@ -125,7 +182,7 @@ SC:SOLENOID_CONTROL
 	          CLK => CLK,
 			  RESET => RESET,
 			  ENABLE => ENABLE,
-			  DISTANCE_X => DISTANCE_X,
+			  DISTANCE_RAW => DISTANCE_RAW,
 		      LEVEL => LEVEL,
 			  SOLENOID_CONTROL_SIGNAL => SOLENOID_CONTROL_SIG     
 			  
@@ -160,8 +217,11 @@ DD: DISTANCE_DEDUCER
 	           REF => ref, 
 	           MEAS => meas,
 	           DISTANCE_RAW => DISTANCE_RAW,
-	           DISTANCE_D => DISTANCE_D,
-	           DISTANCE_X => DISTANCE_X
+	          DISTANCE_ONES => one,
+               DISTANCE_TENS => ten,
+               DISTANCE_TENTHS => tenth
+	         --  DISTANCE_D => DISTANCE_D,
+	        --   DISTANCE_X => DISTANCE_X
 	        );
 	       
 
@@ -171,6 +231,7 @@ SWG: SAWTOOTH_WAVE_GENERATOR
 	port map(   
 	           clk => CLK,
 			   reset => reset,
+			 MEAS => meas,
 			   SAW_PWM => SAW_PWM	   
 			 );
 
@@ -178,5 +239,6 @@ SWG: SAWTOOTH_WAVE_GENERATOR
 
 
 
+--meas <= meas_1;
 
 end Behavioral;
