@@ -292,15 +292,15 @@ begin
 	   counter <= 0;
 	   
 	else -- total width is at 480 for now
-        if(scan_line_x < "00111100000") then
-            x_counter <= x_counter + 1;
-        -- less than the width
-            if(counter = size - 1) then
-                    counter <= 0;
-                    index_x <= index_x+1;
-                else
-                    counter <= counter + 1;
-            end if;
+                     if(scan_line_x < "00111100000") then
+                            x_counter <= x_counter + 1;
+                                                             -- less than the width
+                     if(counter = size - 1) then
+                           counter <= 0;
+                           index_x <= index_x+1;
+                     else
+                           counter <= counter + 1;
+                     end if;
             
         else
             -- if scan_line_x equals total width then increment y_counter
