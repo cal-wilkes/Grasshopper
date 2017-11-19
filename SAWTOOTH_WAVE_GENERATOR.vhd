@@ -63,8 +63,9 @@ begin
                              amp <= 0;
                                       
                 
-                       elsif((counter < 100000000) and (internal_counter = 1000000)) then 
-                             amp <= amp + 10;
+                       elsif((counter < 100000000) and (internal_counter = 100000)) then 
+                             amp <= amp + 1;
+                             meas <= amp;
                              counter <= counter+1;
                              internal_counter <= 0;
                              

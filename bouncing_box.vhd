@@ -180,7 +180,17 @@ signal nine: matrix:= 		                                            (
                                                                                ('0', '0', '0', '1')
                                                                        );                           
                         
-
+signal ex: matrix:= 		                                            ( 
+                                                                                                                                                      ('1', '0', '0', '1'),
+                                                                                                                                                      ('1', '0', '0', '1'),
+                                                                                                                                                      ('0', '1', '1', '0'),
+                                                                                                                                                      ('0', '1', '1', '0'),
+                                                                                                                                                      ('0', '1', '1', '0'),
+                                                                                                                                                      ('0', '1', '1', '0'),
+                                                                                                                                                      ('1', '0', '0', '1'),
+                                                                                                                                                      ('1', '0', '0', '1')
+                                                                                                                                              );                           
+                                                                                               
 
                         
                         
@@ -212,12 +222,8 @@ begin
      elsif (i_tens(0,1) = '1' and ((scan_line_x >= "00000101000") and (scan_line_y >= "00000000000") and (scan_line_x < "00000101000"+width) and (scan_line_y < "00000000000"+width))) then
                     
                                               pixel_color <= box_color;    
-                          
-         
-                    
-                    
 
-     
+
 
     elsif (i_tens(0,2) = '1' and ((scan_line_x >= "00001010000") and (scan_line_y >= "00000000000") and (scan_line_x < "00001010000"+width) and (scan_line_y < "00000000000"+width))) then
 
@@ -859,8 +865,10 @@ begin
             i_tens <= seven;        
         elsif(tens = 8)then
             i_tens <= eight;
+         elsif(tens = 9) then
+             i_tens <= nine;
         else
-            i_tens <= nine;
+            i_tens <= ex;
         end if;
         
         if(ones = 0)then
@@ -881,8 +889,11 @@ begin
             i_ones <= seven;        
         elsif(ones = 8)then
             i_ones <= eight;
-        else
+        elsif(ones = 9) then
             i_ones <= nine;
+        else
+            i_ones <= ex;    
+        
         end if;
         
         if(tenths = 0)then
@@ -903,8 +914,10 @@ begin
             i_tenths <= seven;        
         elsif(tenths = 8)then
             i_tenths <= eight;
-        else
+        elsif(tenths = 9) then
             i_tenths <= nine;
+        else 
+             i_tenths <= ex;
         end if;
 	
 
