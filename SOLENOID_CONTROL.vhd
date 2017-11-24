@@ -1,4 +1,3 @@
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -61,7 +60,7 @@ begin
                  
                  
             elsif((trigger = 1)  and (counter < 500000000)) then               -- adjust counter limits for simulationS
-                 amp <= 1000;                                                     -- can be adjusted to control solenoid 
+                 amp <= 10000;                                                     -- can be adjusted to control solenoid 
                  counter <= counter +1;                                           -- increase counter
             
             else

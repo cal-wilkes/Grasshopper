@@ -63,16 +63,16 @@ begin
                              amp <= 0;
                                       
                 
-                       elsif((counter < 100000000) and (internal_counter = 100000)) then 
-                             amp <= amp + 1;
-                             meas <= amp;
+                       elsif((counter < 100000000) and (internal_counter = 30000)) then 
+                             amp <= amp + 3;
+                     
                              counter <= counter+1;
                              internal_counter <= 0;
                              
                        
                        elsif(counter < 100000000) then                    
                              counter <= counter+1;
-                             meas <= amp;
+                   
                              internal_counter <= internal_counter +1;
                              
                        
@@ -86,6 +86,8 @@ begin
                 end if;
                 
 end process;  
+
+        meas <= amp;
 
 
 end behavioural;

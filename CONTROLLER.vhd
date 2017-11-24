@@ -38,6 +38,7 @@ entity CONTROLLER is
                 SWITCH: in STD_LOGIC_VECTOR(2 downto 0);
                 COMPARE: in STD_LOGIC;
                 SAW_PWM: out STD_LOGIC;
+                CHANGE: in std_logic;
                 r: out STD_LOGIC_VECTOR(3 downto 0);
                 g: out STD_LOGIC_VECTOR(3 downto 0);
                 b: out STD_LOGIC_VECTOR(3 downto 0);
@@ -111,6 +112,7 @@ component DISTANCE_DEDUCER is
 	       CLK: in STD_LOGIC;
 	       RESET: in STD_LOGIC;
 	       COMPARE: in STD_LOGIC;
+	       CHANGE: in STD_LOGIC;
 	       REF:  in INTEGER;
 	       MEAS: in INTEGER;
 	       DISTANCE_RAW: out INTEGER;
@@ -214,6 +216,7 @@ DD: DISTANCE_DEDUCER
 	           CLK => CLK,
 	           RESET => RESET,
 	           COMPARE => COMPARE,
+	           CHANGE => CHANGE,
 	           REF => ref, 
 	           MEAS => meas,
 	           DISTANCE_RAW => DISTANCE_RAW,

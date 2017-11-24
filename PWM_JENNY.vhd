@@ -16,7 +16,7 @@ end PWM_JENNY;
 architecture Behavioural of PWM_JENNY is 
 
 signal counter: integer;
-signal max_counter: integer := 999;
+signal max_counter: integer := 9999;
 
 begin
 

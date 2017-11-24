@@ -22,22 +22,22 @@ CHANGE_LEVEL: process(CLK) begin
             
             if( (LEVEL_SWITCH(0) = '0') and (LEVEL_SWITCH(1) = '0')) then 
                     
-                    LEVEL <= 500;
+                    LEVEL <= 4000;
                     
             
             elsif((LEVEL_SWITCH(0) = '1') and (LEVEL_SWITCH(1) = '0')) then 
                                        
-                    LEVEL <= 400;
+                    LEVEL <= 3000;
                     
               
             elsif((LEVEL_SWITCH(0) = '0') and (LEVEL_SWITCH(1) = '1')) then 
                                                         
-                    LEVEL <= 300;
+                    LEVEL <= 2500;
                     
                     
             elsif((LEVEL_SWITCH(0) = '1') and (LEVEL_SWITCH(1) = '1')) then 
                                                         
-                    LEVEL <= 200;
+                    LEVEL <= 2000;
                     
             
             end if;
