@@ -1,38 +1,8 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/05/2017 11:40:06 AM
--- Design Name: 
--- Module Name: DISTANCE_DEDUCE_TB - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
 entity ADJUST_LEVEL_TB is
---  Port ( );
+
 end ADJUST_LEVEL_TB;
 
 architecture Behavioral of ADJUST_LEVEL_TB is
@@ -49,7 +19,7 @@ end component;
 
 signal clk, reset: STD_LOGIC;
 signal level: INTEGER;
-signal sam: integer;
+signal sam: integer:= 0;
 signal level_switch: STD_LOGIC_VECTOR(1 downto 0);
 
 
@@ -60,7 +30,9 @@ uut: ADJUST_LEVEL
 	           CLK => clk,
                RESET => reset,
                LEVEL_SWITCH => level_switch,
-               LEVEL => LEVEL
+               LEVEL => LEVEL,
+               sam => sam
+    
                  );
 
 clock_process: process

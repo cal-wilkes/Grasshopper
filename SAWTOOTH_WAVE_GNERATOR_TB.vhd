@@ -12,14 +12,14 @@ component SAWTOOTH_WAVE_GENERATOR is
 	port(   CLK: in std_logic;
 			RESET: in std_logic;
 			enable: in std_logic;
-			sam: in std_logic;
-			meas: out std_logic;
+			sam: in integer;
+			meas: out integer;
 			SAW_PWM: out std_logic   );
 end component;
 
 
-signal clk, reset, enable, sam, meas, saw_pwm: STD_LOGIC;
-
+signal clk, reset, enable, saw_pwm: STD_LOGIC;
+signal sam, meas: integer; 
 
 
 constant clk_period : time := 10 ns;
@@ -31,7 +31,11 @@ begin
 		port map (
 					clk => clk,
 					reset => reset,
-					SAW_PWM => saw_pwm	);
+					SAW_PWM => saw_pwm,
+					enable => enable,
+					MEAS => MEAS,
+					sam => sam
+					);
 					
 					
 clk_process :process
@@ -56,9 +60,9 @@ stim_proc : process
 	wait for 100 ns;
 	enable <= '1';
 	wait for 100 ns;
-	sam <= '0';
+	sam <= 0;
 	wait for 100 ns;
-	sam <= '1';
+	sam <= 1;
 	wait for 100 ns;
     wait;
 	

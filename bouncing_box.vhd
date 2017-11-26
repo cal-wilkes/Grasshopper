@@ -53,7 +53,7 @@ signal y_offset:  std_logic_vector ( 10 downto 0):= "00001010000";
 signal i_tens, i_ones, i_tenths: matrix; 
 
 
-signal width: std_logic_vector := "000101000";  --40
+signal width: std_logic_vector(8 downto 0) := "000101000";  --40
 signal box_color:  STD_LOGIC_VECTOR(11 downto 0) := "000000000000";
 
 
