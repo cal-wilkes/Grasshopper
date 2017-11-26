@@ -145,5 +145,6 @@ begin
         tenths <= 9;
         wait for 100 ns;
         wait;
-        
+       end process;
+	   
 end behavior;
