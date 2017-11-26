@@ -11,11 +11,14 @@ architecture behaviour of SAWTOOTH_WAVE_GENERATOR_TB is
 component SAWTOOTH_WAVE_GENERATOR is
 	port(   CLK: in std_logic;
 			RESET: in std_logic;
+			enable: in std_logic;
+			sam: in std_logic;
+			meas: out std_logic;
 			SAW_PWM: out std_logic   );
 end component;
 
 
-signal clk, reset, saw_pwm: STD_LOGIC;
+signal clk, reset, enable, sam, meas, saw_pwm: STD_LOGIC;
 
 
 
@@ -48,6 +51,15 @@ stim_proc : process
     reset <= '1';
     wait for 100 ns;
     reset <= '0';
+	wait for 100 ns;
+	enable <= '0';
+	wait for 100 ns;
+	enable <= '1';
+	wait for 100 ns;
+	sam <= '0';
+	wait for 100 ns;
+	sam <= '1';
+	wait for 100 ns;
     wait;
 	
 end process;

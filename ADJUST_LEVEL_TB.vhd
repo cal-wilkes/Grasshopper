@@ -42,12 +42,14 @@ component ADJUST_LEVEL is
         CLK: in STD_LOGIC;
         RESET: in STD_LOGIC;
         LEVEL_SWITCH: in STD_LOGIC_VECTOR(1 downto 0);
+		sam: out integer;
         LEVEL: out INTEGER  );
 
 end component;
 
 signal clk, reset: STD_LOGIC;
 signal level: INTEGER;
+signal sam: integer;
 signal level_switch: STD_LOGIC_VECTOR(1 downto 0);
 
 
