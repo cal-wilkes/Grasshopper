@@ -59,7 +59,7 @@ begin
                  trigger <= 1;                                                 -- actuate the solenoid
                  
                  
-            elsif((trigger = 1)  and (counter < 500000000)) then               -- adjust counter limits for simulationS
+            elsif((trigger = 1)  and (counter < 200000000)) then               -- adjust counter limits for simulationS
                  amp <= 10000;                                                     -- can be adjusted to control solenoid 
                  counter <= counter +1;                                           -- increase counter
             

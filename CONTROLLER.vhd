@@ -93,6 +93,7 @@ component ADJUST_LEVEL is
 				CLK: in STD_LOGIC;
 				RESET: in STD_LOGIC;
                 LEVEL_SWITCH: in STD_LOGIC_VECTOR(1 downto 0);
+                sam: out integer;
                 LEVEL: out INTEGER  );
 end component;
 
@@ -129,7 +130,9 @@ end component;
 
 component SAWTOOTH_WAVE_GENERATOR is
 	port(   clk: in std_logic; 
+	          ENABLE: in std_logic;
 			reset: in std_logic;
+			sam: in INTEGER;
 			MEAS: out INTEGER;
 			SAW_PWM: out std_logic);
 end component;
@@ -143,7 +146,7 @@ end component;
 signal D_BUTTON, LEVEL_SWITCHES: STD_LOGIC_VECTOR(1 downto 0);
 signal D_SWITCH: STD_LOGIC_VECTOR(2 downto 0);
 signal RESET, ENABLE, CALIBRATER: STD_LOGIC;
-signal DISTANCE_X, LEVEL, ref, DISTANCE_RAW, meas, meas_1, DISTANCE_D, one, ten, tenth: INTEGER;
+signal DISTANCE_X, LEVEL, ref, DISTANCE_RAW, meas, meas_1, DISTANCE_D, one, ten, tenth, i_sam: INTEGER;
 
 
 
@@ -196,6 +199,7 @@ AL: ADJUST_LEVEL
 				CLK => CLK,
 				RESET => RESET,
                 LEVEL_SWITCH => LEVEL_SWITCHES,
+                sam => i_sam,
                 LEVEL => LEVEL
               );
 
@@ -233,7 +237,9 @@ DD: DISTANCE_DEDUCER
 SWG: SAWTOOTH_WAVE_GENERATOR 
 	port map(   
 	           clk => CLK,
+	           enable => enable,
 			   reset => reset,
+			   sam => i_sam,
 			 MEAS => meas,
 			   SAW_PWM => SAW_PWM	   
 			 );

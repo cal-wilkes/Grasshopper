@@ -56,7 +56,15 @@ up_date_REF: process(CLK)
 begin
          if(rising_edge(CLK)) then
          
+                        if(reset = '1') then
+                        
+                        REF <= 3520;
+                        
+                        else
+         
                         REF <= i_REF;
+                        
+                        end if;
          
          end if;
                         
