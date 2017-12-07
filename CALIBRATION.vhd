@@ -1,24 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/05/2017 11:22:13 AM
--- Design Name: 
--- Module Name: DISTANCE_DEDUCER - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -68,9 +47,6 @@ begin
          
          end if;
                         
-end process;
-
-        
-                               
+end process;                       
 
 end behavioural;
