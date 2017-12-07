@@ -1,24 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/05/2017 11:22:13 AM
--- Design Name: 
--- Module Name: DISTANCE_DEDUCER - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -36,9 +15,6 @@ entity DISTANCE_DEDUCER is
 	       DISTANCE_ONES: out INTEGER;
 	       DISTANCE_TENS: out INTEGER;
 	       DISTANCE_TENTHS: out INTEGER
-	                     --;
-	      -- DISTANCE_D: out INTEGER;
-	     --  DISTANCE_X: out INTEGER  
 	      );
 	       
 end DISTANCE_DEDUCER;
@@ -49,14 +25,9 @@ type int_array is array (2 downto 0) of integer;
 
 type unit_conv_tab is array (399 downto 0) of int_array; 
 
-
-
-
 signal  iDISTANCE_ONES,iDISTANCE_TENS, i_DISTANCE_X, i_DISTANCE_D, i_DISTANCE_RAW, snap, aquired: integer;
 
 begin
-
-
 
 sample: process(COMPARE)
 begin
@@ -82,12 +53,6 @@ end process;
 
 up_date: process(snap)
 begin
-
-             --        if(rising_edge(CLK)) then 
-                                   
-                                   
-     
-                                       
                                        
       if (CHANGE = '0') then                                     
                                        
@@ -138,8 +103,7 @@ begin
                                         DISTANCE_TENS <=  0;   
                                         
                                         
-               
-                                                                               if(snap > ref+3050) then 
+                                               if(snap > ref+3050) then 
                                                                                      DISTANCE_TENTHS <= 0;
                                                                                      
                                                                               elsif(snap > ref+2930) then 
@@ -148,8 +112,7 @@ begin
                                                                               elsif(snap > ref+2830) then 
                                                                                      DISTANCE_TENTHS <= 2;
                                                                                      
-                                                                                     
-                                                                              elsif(snap > ref+2720) then 
+                                                                                                                elsif(snap > ref+2720) then 
                                                                                             DISTANCE_TENTHS <= 3;
                                        
                                                                              elsif(snap > ref+2620) then 
