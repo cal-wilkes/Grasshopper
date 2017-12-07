@@ -1,35 +1,5 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/05/2017 03:57:29 PM
--- Design Name: 
--- Module Name: CONTROLLER - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity CONTROLLER is
         PORT(
@@ -120,8 +90,6 @@ component DISTANCE_DEDUCER is
 	       DISTANCE_ONES: out INTEGER;
            DISTANCE_TENS: out INTEGER;
            DISTANCE_TENTHS: out INTEGER --;
-	   --    DISTANCE_D: out INTEGER;
-	     --  DISTANCE_X: out INTEGER  
 	      );
 	       
 end component;
@@ -136,12 +104,6 @@ component SAWTOOTH_WAVE_GENERATOR is
 			MEAS: out INTEGER;
 			SAW_PWM: out std_logic);
 end component;
-
-
--- ADD VGA CONTROLLER MODULE
-
-
-
 
 signal D_BUTTON, LEVEL_SWITCHES: STD_LOGIC_VECTOR(1 downto 0);
 signal D_SWITCH: STD_LOGIC_VECTOR(2 downto 0);
@@ -227,8 +189,6 @@ DD: DISTANCE_DEDUCER
 	          DISTANCE_ONES => one,
                DISTANCE_TENS => ten,
                DISTANCE_TENTHS => tenth
-	         --  DISTANCE_D => DISTANCE_D,
-	        --   DISTANCE_X => DISTANCE_X
 	        );
 	       
 
@@ -243,11 +203,5 @@ SWG: SAWTOOTH_WAVE_GENERATOR
 			 MEAS => meas,
 			   SAW_PWM => SAW_PWM	   
 			 );
-
--- INSTANTIATE THE VGA CONTROL MODULE AND ADD ANY NECESSARY INTERNAL AND EXTERNAL SIGNALS
-
-
-
---meas <= meas_1;
 
 end Behavioral;
